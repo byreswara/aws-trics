@@ -1,0 +1,42 @@
+stop the instance which is lost the .pem file
+
+detach the volume
+
+create a instance with new key  ( by using this new key we can login after this setup)
+
+attach the volume to new instance which is detached from the lost .pem file instance
+
+login to the new instance
+
+follow the below the commands
+--------------------------------------------------
+
+sudo -i  (to go root user)
+
+lsblk  (it shows the volumes and find the newly attached volume. it will be like 'xvdf or xvdf1')
+
+mkdir  /mnt/recovery  (creat a directory)
+
+mount  /dev/xvdf1  /mnt/recovery  (create a mount point)
+
+lsblk  (you can find mount point for xvdf1)
+
+cat  /home/ec2-user/.ssh/authorized_keys  > /mnt/recovery/home/ec2-user/.ssh/authorized_keys
+     (it append or update the keys)
+
+umount /mnt/recovery     (unmount the volume)
+
+exit
+
+stop the new instance and detach the secondary volume. ( it will be /dev/sdf )
+
+and attach this volume to instance which dont have the .pem file
+
+note: while attach this volume type '  /dev/xvda ' in the device coloumn.
+
+now you can login to this insatance with newly created key.
+
+
+
+
+
